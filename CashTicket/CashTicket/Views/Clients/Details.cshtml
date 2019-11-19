@@ -1,0 +1,82 @@
+﻿@model CashTicket.Models.Client
+
+@{
+    ViewBag.Title = "Подробнее о клиенте";
+}
+
+<h2>Подробная информация о клиенте №@Html.DisplayFor(model => model.id_client)</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayName("Номер клиента")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_client)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Роль")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role.name_role)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Фамилия")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Имя")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Отчество")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.patronymic)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Паспорт")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pass)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Логин")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.login)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Пароль")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редактировать клиента", "Edit", new { id = Model.id_client }) |
+    @Html.ActionLink("Вернуться к списку клиентов", "Index")
+</p>

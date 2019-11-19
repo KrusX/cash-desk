@@ -1,0 +1,63 @@
+﻿@model CashTicket.Models.Rey
+
+@{
+    ViewBag.Title = "Удаление рейса";
+}
+
+<h2>Удаление рейса</h2>
+
+<h3>Вы точно хотите удалить рейс №@Html.DisplayFor(model => model.id_reys)?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Номер поезда")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Train.id_train)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Место отправления")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.start_point)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Место прибытия")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.end_point)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Дата отправления")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.start_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Дата прибытия")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.end_date)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить рейс" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к расписанию рейсов", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CashTicket.Models.Ticket>
+
+@{
+    ViewBag.Title = "Билеты";
+}
+
+<h2>Билеты</h2>
+
+<p>
+    @Html.ActionLink("Создать билет", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Номер рейса")
+        </th>
+        <th>
+            @Html.DisplayName("Номер поезда")
+        </th>
+        <th>
+            @Html.DisplayName("Номер вагона")
+        </th>
+        <th>
+            @Html.DisplayName("Тип вагона")
+        </th>
+        <th>
+            @Html.DisplayName("Номер места")
+        </th>
+        <th>
+            @Html.DisplayName("Статус билета")
+        </th>
+        <th>
+            @Html.DisplayName("Цена")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rey.id_reys)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place.Wagon.Train.id_train)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place.Wagon.id_wagon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place.Wagon.Type_wagon.name_type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place.id_place)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status_ticket.name_status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.id_ticket }) |
+                @Html.ActionLink("Забронировать билет", "AddToReserve", new { id = item.id_ticket }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.id_ticket })
+            </td>
+        </tr>
+
+    }
+
+</table>
+
+@Html.ActionLink("Вернуться к расписанию рейсов", "Index", "Reys", null, null)

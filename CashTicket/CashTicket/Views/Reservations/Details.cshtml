@@ -1,0 +1,50 @@
+﻿@model CashTicket.Models.Reservation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Reservation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Номер поезда")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ticket.id_ticket)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Дата бронирования")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_reservation)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Фамилия пользователя")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Статус бронирования")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status_res.name_status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.id_reservation }) |
+    @Html.ActionLink("Вернуться к списку бронирований", "Index")
+</p>

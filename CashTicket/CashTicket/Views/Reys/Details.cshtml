@@ -1,0 +1,58 @@
+﻿@model CashTicket.Models.Rey
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Rey</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.start_point)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.start_point)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.end_point)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.end_point)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.start_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.start_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.end_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.end_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Train.id_train)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Train.id_train)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_reys }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

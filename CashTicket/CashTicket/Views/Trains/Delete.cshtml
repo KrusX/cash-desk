@@ -1,0 +1,39 @@
+﻿@model CashTicket.Models.Train
+
+@{
+    ViewBag.Title = "Удаление поезда";
+}
+
+<h2>Удаление поезда</h2>
+
+<h3>Вы действительно хотите удалить поезд №@Html.DisplayFor(model => model.id_train)?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Номер поезда")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_train)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Тип поезда")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type_train.name_type)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к списку поездов", "Index")
+        </div>
+    }
+</div>

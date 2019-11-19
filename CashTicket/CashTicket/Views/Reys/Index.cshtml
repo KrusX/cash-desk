@@ -1,0 +1,96 @@
+﻿@model IEnumerable<CashTicket.Models.Rey>
+
+@{
+    ViewBag.Title = "Расписание рейсов";
+}
+
+<div align="center">
+    <h2>Расписание рейсов</h2>
+    @Html.ActionLink("Создать рейс", "Create") | 
+    @Html.ActionLink("Поезда", "Index", "Trains", null, null) | 
+    @Html.ActionLink("Вагоны", "Index", "Wagons", null, null) | 
+    @Html.ActionLink("Клиенты", "Index", "CLients", null, null)
+</div>
+
+    @using (Html.BeginForm("Index", "Reys", FormMethod.Get))
+    {
+        <table class="table" style="width:50%; margin:auto; margin-bottom:20px; margin-top:20px;">
+            <tr>
+                <td>
+                    @Html.TextBox("search1", null, new { placeholder = "Откуда", @class = "form-input" })
+                </td>
+                <td>
+                    @Html.TextBox("search2", null, new { placeholder = "Куда", @class = "form-input" })
+                </td>
+                <td>
+                    <input type="submit" value="Искать рейс" />
+                </td>
+            </tr>
+        </table>
+    }
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Номер рейса")
+        </th>
+        <th>
+            @Html.DisplayName("Номер поезда")
+        </th>
+        <th>
+            @Html.DisplayName("Место отправления")
+        </th>
+        <th>
+            @Html.DisplayName("Место прибытия")
+        </th>
+        <th>
+            @Html.DisplayName("Отправление")
+        </th>
+        <th>
+            @Html.DisplayName("Прибытие")
+        </th>
+        <th></th>
+    </tr>
+
+    <tbody>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="3" style="color:red">
+                    Рейсов не найдено
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_reys)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Train.id_train)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.start_point)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.end_point)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.start_date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.end_date)
+                </td>
+                <td>
+                    @Html.ActionLink("Редактировать рейс", "Edit", new { id = item.id_reys }) |
+                    @Html.ActionLink("Удалить рейс", "Delete", new { id = item.id_reys }) |
+                    @Html.ActionLink("Забронировать билет", "Index", "Tickets", new { id = item.id_reys }, null)
+                </td>
+            </tr>
+            }
+        }
+        </tbody>
+</table>

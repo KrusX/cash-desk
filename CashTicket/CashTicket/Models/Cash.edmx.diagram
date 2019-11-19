@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="149f03ea2f2a441388c9aa65ab2b3f4c" Name="Diagram1">
+        <EntityTypeShape EntityType="CashDeskModel.Client" Width="1.5" PointX="7.5" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Place" Width="1.5" PointX="7.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Reservation" Width="1.5" PointX="9.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Rey" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Role" Width="1.5" PointX="5.25" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Status_res" Width="1.5" PointX="7.5" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Status_ticket" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Ticket" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Train" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Type_train" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Type_wagon" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CashDeskModel.Wagon" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="CashDeskModel.FK_Client_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Reservation_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Place_Wagon" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Ticket_Place" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Reservation_Status_res" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Reservation_Ticket" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Reys_Train" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Ticket_Reys" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Ticket_Status_ticket" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Train_Type_train" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Wagon_Train" ManuallyRouted="false" />
+        <AssociationConnector Association="CashDeskModel.FK_Wagon_Type_wagon" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

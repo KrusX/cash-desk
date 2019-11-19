@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CashTicket.Models.Train>
+
+@{
+    ViewBag.Title = "Поезда";
+}
+
+<h2>Список поездов</h2>
+
+<p>
+    @Html.ActionLink("Создать новый поезд", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Номер поезда")
+        </th>
+        <th>
+            @Html.DisplayName("Тип поезда")
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_train)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type_train.name_type)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.id_train }) |
+            @Html.ActionLink("Подробнее", "Details", new { id = item.id_train }) |
+            @Html.ActionLink("Удалить поезд", "Delete", new { id = item.id_train })
+        </td>
+    </tr>
+}
+
+</table>

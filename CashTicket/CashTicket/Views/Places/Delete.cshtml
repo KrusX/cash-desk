@@ -1,0 +1,39 @@
+﻿@model CashTicket.Models.Place
+
+@{
+    ViewBag.Title = "Удаление места";
+}
+
+<h2>Удаление места</h2>
+
+<h3>Вы действительно хотите удалить место №@Html.DisplayFor(model => model.Wagon.id_wagon)?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Номер места")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_place)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Номер вагона")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Wagon.id_wagon)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к списку вагонов", "Index", "Wagons")
+        </div>
+    }
+</div>

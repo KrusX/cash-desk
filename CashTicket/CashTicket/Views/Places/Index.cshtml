@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CashTicket.Models.Place>
+
+@{
+    ViewBag.Title = "Создание места";
+}
+
+<h2>Создание места</h2>
+
+<p>
+    @Html.ActionLink("Создать место", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Номер места")
+        </th>
+        <th>
+            @Html.DisplayName("Номер поезда")
+        </th>
+        <th>
+            @Html.DisplayName("Номер вагона")
+        </th>
+        <th>
+            @Html.DisplayName("Тип вагона")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_place)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wagon.Train.id_train)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wagon.id_wagon)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Wagon.Type_wagon.name_type)
+        </td>
+        <td>
+            @Html.ActionLink("Редактировать", "Edit", new { id = item.id_place }) |
+            @Html.ActionLink("Удалить", "Delete", new { id = item.id_place })
+        </td>
+    </tr>
+}
+
+</table>

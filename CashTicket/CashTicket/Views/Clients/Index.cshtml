@@ -1,0 +1,66 @@
+﻿@model IEnumerable<CashTicket.Models.Client>
+
+@{
+    ViewBag.Title = "Клиенты";
+}
+
+<div align="center">
+    <h2>Список клиентов</h2>
+    @Html.ActionLink("Создать нового клиента", "Create")
+</div>
+
+@using (Html.BeginForm("Index", "Clients", FormMethod.Get))
+{
+    <table class="table" style="width:50%; margin:auto; margin-bottom:20px; margin-top:20px;">
+        <tr>
+            <td>
+                @Html.TextBox("search_login", null, new { placeholder = "Введите логин...", @class = "form-input" })
+            </td>
+            <td>
+                <input type="submit" value="Искать клиента" />
+            </td>
+        </tr>
+    </table>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Номер клиента")
+        </th>
+        <th>
+            @Html.DisplayName("Роль")
+        </th>
+        <th>
+            @Html.DisplayName("Логин")
+        </th>
+        <th>
+            @Html.DisplayName("Пароль")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <th>
+                @Html.DisplayFor(model => item.id_client)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.name_role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.login)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.password)
+            </td>
+            <td>
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.id_client }) |
+                @Html.ActionLink("Подробнее", "Details", new { id = item.id_client }) |
+                @Html.ActionLink("Удалить", "Delete", new { id = item.id_client })
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,57 @@
+﻿@model CashTicket.Models.Reservation
+
+@{
+    ViewBag.Title = "Удаление бронирования";
+}
+
+<h2>Удаление бронирования</h2>
+
+<h3>Вы действительно хотите удалить бронирование № @Html.DisplayFor(model => model.id_reservation)?</h3>
+
+<div>
+    <h4>Reservation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Номер билета")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ticket.id_ticket)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Дата бронирования")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date_reservation)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Фамилия клиента")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Статус бронирования")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status_res.name_status)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к списку бронирований", "Index")
+        </div>
+    }
+</div>

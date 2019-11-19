@@ -1,0 +1,793 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище CashDeskModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="id_client" />
+          </Key>
+          <Property Name="id_client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="patronymic" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="pass" Type="int" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="role_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="id_place" />
+          </Key>
+          <Property Name="id_place" Type="int" Nullable="false" />
+          <Property Name="wagon_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="id_reservation" />
+          </Key>
+          <Property Name="id_reservation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ticket_id" Type="int" Nullable="false" />
+          <Property Name="date_reservation" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="client_id" Type="int" Nullable="false" />
+          <Property Name="status_reservation_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reys">
+          <Key>
+            <PropertyRef Name="id_reys" />
+          </Key>
+          <Property Name="id_reys" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="train_id" Type="int" Nullable="false" />
+          <Property Name="start_point" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="end_point" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="start_date" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="end_date" Type="datetime2" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status_res">
+          <Key>
+            <PropertyRef Name="id_status_reservation" />
+          </Key>
+          <Property Name="id_status_reservation" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_status" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status_ticket">
+          <Key>
+            <PropertyRef Name="id_status_ticket" />
+          </Key>
+          <Property Name="id_status_ticket" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_status" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="id_ticket" />
+          </Key>
+          <Property Name="id_ticket" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="reys_id" Type="int" Nullable="false" />
+          <Property Name="place_id" Type="int" Nullable="false" />
+          <Property Name="price" Type="money" Nullable="false" />
+          <Property Name="status_ticket_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Train">
+          <Key>
+            <PropertyRef Name="id_train" />
+          </Key>
+          <Property Name="id_train" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type_train_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Type_train">
+          <Key>
+            <PropertyRef Name="id_type_train" />
+          </Key>
+          <Property Name="id_type_train" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Type_wagon">
+          <Key>
+            <PropertyRef Name="id_type_wagon" />
+          </Key>
+          <Property Name="id_type_wagon" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Wagon">
+          <Key>
+            <PropertyRef Name="id_wagon" />
+          </Key>
+          <Property Name="id_wagon" Type="int" Nullable="false" />
+          <Property Name="train_id" Type="int" Nullable="false" />
+          <Property Name="type_wagon_id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Client_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_Wagon">
+          <End Role="Wagon" Type="Self.Wagon" Multiplicity="1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wagon">
+              <PropertyRef Name="id_wagon" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="wagon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id_client" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Status_res">
+          <End Role="Status_res" Type="Self.Status_res" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status_res">
+              <PropertyRef Name="id_status_reservation" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="status_reservation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id_ticket" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="ticket_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reys_Train">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Reys" Type="Self.Reys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="id_train" />
+            </Principal>
+            <Dependent Role="Reys">
+              <PropertyRef Name="train_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="id_place" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Reys">
+          <End Role="Reys" Type="Self.Reys" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reys">
+              <PropertyRef Name="id_reys" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="reys_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Status_ticket">
+          <End Role="Status_ticket" Type="Self.Status_ticket" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status_ticket">
+              <PropertyRef Name="id_status_ticket" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="status_ticket_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Train_Type_train">
+          <End Role="Type_train" Type="Self.Type_train" Multiplicity="1" />
+          <End Role="Train" Type="Self.Train" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_train">
+              <PropertyRef Name="id_type_train" />
+            </Principal>
+            <Dependent Role="Train">
+              <PropertyRef Name="type_train_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wagon_Train">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Wagon" Type="Self.Wagon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="id_train" />
+            </Principal>
+            <Dependent Role="Wagon">
+              <PropertyRef Name="train_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wagon_Type_wagon">
+          <End Role="Type_wagon" Type="Self.Type_wagon" Multiplicity="1" />
+          <End Role="Wagon" Type="Self.Wagon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_wagon">
+              <PropertyRef Name="id_type_wagon" />
+            </Principal>
+            <Dependent Role="Wagon">
+              <PropertyRef Name="type_wagon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище CashDeskModelContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Place" EntityType="Self.Place" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reservation" EntityType="Self.Reservation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reys" EntityType="Self.Reys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status_res" EntityType="Self.Status_res" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status_ticket" EntityType="Self.Status_ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Train" EntityType="Self.Train" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type_train" EntityType="Self.Type_train" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type_wagon" EntityType="Self.Type_wagon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Wagon" EntityType="Self.Wagon" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Client_Role" Association="Self.FK_Client_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_Wagon" Association="Self.FK_Place_Wagon">
+            <End Role="Wagon" EntitySet="Wagon" />
+            <End Role="Place" EntitySet="Place" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Client" Association="Self.FK_Reservation_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Status_res" Association="Self.FK_Reservation_Status_res">
+            <End Role="Status_res" EntitySet="Status_res" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Ticket" Association="Self.FK_Reservation_Ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Reservation" EntitySet="Reservation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reys_Train" Association="Self.FK_Reys_Train">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Reys" EntitySet="Reys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Place" Association="Self.FK_Ticket_Place">
+            <End Role="Place" EntitySet="Place" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Reys" Association="Self.FK_Ticket_Reys">
+            <End Role="Reys" EntitySet="Reys" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Status_ticket" Association="Self.FK_Ticket_Status_ticket">
+            <End Role="Status_ticket" EntitySet="Status_ticket" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Train_Type_train" Association="Self.FK_Train_Type_train">
+            <End Role="Type_train" EntitySet="Type_train" />
+            <End Role="Train" EntitySet="Train" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wagon_Train" Association="Self.FK_Wagon_Train">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Wagon" EntitySet="Wagon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wagon_Type_wagon" Association="Self.FK_Wagon_Type_wagon">
+            <End Role="Type_wagon" EntitySet="Type_wagon" />
+            <End Role="Wagon" EntitySet="Wagon" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CashDeskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="id_client" />
+          </Key>
+          <Property Name="id_client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pass" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="role_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Client_Role" FromRole="Client" ToRole="Role" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Client" FromRole="Client" ToRole="Reservation" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="id_place" />
+          </Key>
+          <Property Name="id_place" Type="Int32" Nullable="false" />
+          <Property Name="wagon_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Wagon" Relationship="Self.FK_Place_Wagon" FromRole="Place" ToRole="Wagon" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Place" FromRole="Place" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Reservation">
+          <Key>
+            <PropertyRef Name="id_reservation" />
+          </Key>
+          <Property Name="id_reservation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ticket_id" Type="Int32" Nullable="false" />
+          <Property Name="date_reservation" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="client_id" Type="Int32" Nullable="false" />
+          <Property Name="status_reservation_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Reservation_Client" FromRole="Reservation" ToRole="Client" />
+          <NavigationProperty Name="Status_res" Relationship="Self.FK_Reservation_Status_res" FromRole="Reservation" ToRole="Status_res" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_Reservation_Ticket" FromRole="Reservation" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Rey">
+          <Key>
+            <PropertyRef Name="id_reys" />
+          </Key>
+          <Property Name="id_reys" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="train_id" Type="Int32" Nullable="false" />
+          <Property Name="start_point" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="end_point" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Train" Relationship="Self.FK_Reys_Train" FromRole="Reys" ToRole="Train" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Reys" FromRole="Reys" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Client_Role" FromRole="Role" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Status_res">
+          <Key>
+            <PropertyRef Name="id_status_reservation" />
+          </Key>
+          <Property Name="id_status_reservation" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Status_res" FromRole="Status_res" ToRole="Reservation" />
+        </EntityType>
+        <EntityType Name="Status_ticket">
+          <Key>
+            <PropertyRef Name="id_status_ticket" />
+          </Key>
+          <Property Name="id_status_ticket" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_Ticket_Status_ticket" FromRole="Status_ticket" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="id_ticket" />
+          </Key>
+          <Property Name="id_ticket" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="reys_id" Type="Int32" Nullable="false" />
+          <Property Name="place_id" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="status_ticket_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Place" Relationship="Self.FK_Ticket_Place" FromRole="Ticket" ToRole="Place" />
+          <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Ticket" FromRole="Ticket" ToRole="Reservation" />
+          <NavigationProperty Name="Rey" Relationship="Self.FK_Ticket_Reys" FromRole="Ticket" ToRole="Reys" />
+          <NavigationProperty Name="Status_ticket" Relationship="Self.FK_Ticket_Status_ticket" FromRole="Ticket" ToRole="Status_ticket" />
+        </EntityType>
+        <EntityType Name="Train">
+          <Key>
+            <PropertyRef Name="id_train" />
+          </Key>
+          <Property Name="id_train" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type_train_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reys" Relationship="Self.FK_Reys_Train" FromRole="Train" ToRole="Reys" />
+          <NavigationProperty Name="Type_train" Relationship="Self.FK_Train_Type_train" FromRole="Train" ToRole="Type_train" />
+          <NavigationProperty Name="Wagons" Relationship="Self.FK_Wagon_Train" FromRole="Train" ToRole="Wagon" />
+        </EntityType>
+        <EntityType Name="Type_train">
+          <Key>
+            <PropertyRef Name="id_type_train" />
+          </Key>
+          <Property Name="id_type_train" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Trains" Relationship="Self.FK_Train_Type_train" FromRole="Type_train" ToRole="Train" />
+        </EntityType>
+        <EntityType Name="Type_wagon">
+          <Key>
+            <PropertyRef Name="id_type_wagon" />
+          </Key>
+          <Property Name="id_type_wagon" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Wagons" Relationship="Self.FK_Wagon_Type_wagon" FromRole="Type_wagon" ToRole="Wagon" />
+        </EntityType>
+        <EntityType Name="Wagon">
+          <Key>
+            <PropertyRef Name="id_wagon" />
+          </Key>
+          <Property Name="id_wagon" Type="Int32" Nullable="false" />
+          <Property Name="train_id" Type="Int32" Nullable="false" />
+          <Property Name="type_wagon_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Places" Relationship="Self.FK_Place_Wagon" FromRole="Wagon" ToRole="Place" />
+          <NavigationProperty Name="Train" Relationship="Self.FK_Wagon_Train" FromRole="Wagon" ToRole="Train" />
+          <NavigationProperty Name="Type_wagon" Relationship="Self.FK_Wagon_Type_wagon" FromRole="Wagon" ToRole="Type_wagon" />
+        </EntityType>
+        <Association Name="FK_Client_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="id_client" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="client_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Place_Wagon">
+          <End Role="Wagon" Type="Self.Wagon" Multiplicity="1" />
+          <End Role="Place" Type="Self.Place" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Wagon">
+              <PropertyRef Name="id_wagon" />
+            </Principal>
+            <Dependent Role="Place">
+              <PropertyRef Name="wagon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Place">
+          <End Role="Place" Type="Self.Place" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="id_place" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="place_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Status_res">
+          <End Role="Status_res" Type="Self.Status_res" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status_res">
+              <PropertyRef Name="id_status_reservation" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="status_reservation_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reservation_Ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="Reservation" Type="Self.Reservation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id_ticket" />
+            </Principal>
+            <Dependent Role="Reservation">
+              <PropertyRef Name="ticket_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reys_Train">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Reys" Type="Self.Rey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="id_train" />
+            </Principal>
+            <Dependent Role="Reys">
+              <PropertyRef Name="train_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Reys">
+          <End Role="Reys" Type="Self.Rey" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reys">
+              <PropertyRef Name="id_reys" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="reys_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ticket_Status_ticket">
+          <End Role="Status_ticket" Type="Self.Status_ticket" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status_ticket">
+              <PropertyRef Name="id_status_ticket" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="status_ticket_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Train_Type_train">
+          <End Role="Type_train" Type="Self.Type_train" Multiplicity="1" />
+          <End Role="Train" Type="Self.Train" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_train">
+              <PropertyRef Name="id_type_train" />
+            </Principal>
+            <Dependent Role="Train">
+              <PropertyRef Name="type_train_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wagon_Train">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Wagon" Type="Self.Wagon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="id_train" />
+            </Principal>
+            <Dependent Role="Wagon">
+              <PropertyRef Name="train_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Wagon_Type_wagon">
+          <End Role="Type_wagon" Type="Self.Type_wagon" Multiplicity="1" />
+          <End Role="Wagon" Type="Self.Wagon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_wagon">
+              <PropertyRef Name="id_type_wagon" />
+            </Principal>
+            <Dependent Role="Wagon">
+              <PropertyRef Name="type_wagon_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CashDeskEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Places" EntityType="Self.Place" />
+          <EntitySet Name="Reservations" EntityType="Self.Reservation" />
+          <EntitySet Name="Reys" EntityType="Self.Rey" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Status_res" EntityType="Self.Status_res" />
+          <EntitySet Name="Status_ticket" EntityType="Self.Status_ticket" />
+          <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+          <EntitySet Name="Trains" EntityType="Self.Train" />
+          <EntitySet Name="Type_train" EntityType="Self.Type_train" />
+          <EntitySet Name="Type_wagon" EntityType="Self.Type_wagon" />
+          <EntitySet Name="Wagons" EntityType="Self.Wagon" />
+          <AssociationSet Name="FK_Client_Role" Association="Self.FK_Client_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Client" Association="Self.FK_Reservation_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Place_Wagon" Association="Self.FK_Place_Wagon">
+            <End Role="Wagon" EntitySet="Wagons" />
+            <End Role="Place" EntitySet="Places" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Place" Association="Self.FK_Ticket_Place">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Status_res" Association="Self.FK_Reservation_Status_res">
+            <End Role="Status_res" EntitySet="Status_res" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reservation_Ticket" Association="Self.FK_Reservation_Ticket">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="Reservation" EntitySet="Reservations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reys_Train" Association="Self.FK_Reys_Train">
+            <End Role="Train" EntitySet="Trains" />
+            <End Role="Reys" EntitySet="Reys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Reys" Association="Self.FK_Ticket_Reys">
+            <End Role="Reys" EntitySet="Reys" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ticket_Status_ticket" Association="Self.FK_Ticket_Status_ticket">
+            <End Role="Status_ticket" EntitySet="Status_ticket" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Train_Type_train" Association="Self.FK_Train_Type_train">
+            <End Role="Type_train" EntitySet="Type_train" />
+            <End Role="Train" EntitySet="Trains" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wagon_Train" Association="Self.FK_Wagon_Train">
+            <End Role="Train" EntitySet="Trains" />
+            <End Role="Wagon" EntitySet="Wagons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Wagon_Type_wagon" Association="Self.FK_Wagon_Type_wagon">
+            <End Role="Type_wagon" EntitySet="Type_wagon" />
+            <End Role="Wagon" EntitySet="Wagons" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CashDeskModelContainer" CdmEntityContainer="CashDeskEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="CashDeskModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role_id" ColumnName="role_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Places">
+            <EntityTypeMapping TypeName="CashDeskModel.Place">
+              <MappingFragment StoreEntitySet="Place">
+                <ScalarProperty Name="id_place" ColumnName="id_place" />
+                <ScalarProperty Name="wagon_id" ColumnName="wagon_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reservations">
+            <EntityTypeMapping TypeName="CashDeskModel.Reservation">
+              <MappingFragment StoreEntitySet="Reservation">
+                <ScalarProperty Name="id_reservation" ColumnName="id_reservation" />
+                <ScalarProperty Name="ticket_id" ColumnName="ticket_id" />
+                <ScalarProperty Name="date_reservation" ColumnName="date_reservation" />
+                <ScalarProperty Name="client_id" ColumnName="client_id" />
+                <ScalarProperty Name="status_reservation_id" ColumnName="status_reservation_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reys">
+            <EntityTypeMapping TypeName="CashDeskModel.Rey">
+              <MappingFragment StoreEntitySet="Reys">
+                <ScalarProperty Name="id_reys" ColumnName="id_reys" />
+                <ScalarProperty Name="train_id" ColumnName="train_id" />
+                <ScalarProperty Name="start_point" ColumnName="start_point" />
+                <ScalarProperty Name="end_point" ColumnName="end_point" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="CashDeskModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="name_role" ColumnName="name_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status_res">
+            <EntityTypeMapping TypeName="CashDeskModel.Status_res">
+              <MappingFragment StoreEntitySet="Status_res">
+                <ScalarProperty Name="id_status_reservation" ColumnName="id_status_reservation" />
+                <ScalarProperty Name="name_status" ColumnName="name_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status_ticket">
+            <EntityTypeMapping TypeName="CashDeskModel.Status_ticket">
+              <MappingFragment StoreEntitySet="Status_ticket">
+                <ScalarProperty Name="id_status_ticket" ColumnName="id_status_ticket" />
+                <ScalarProperty Name="name_status" ColumnName="name_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="CashDeskModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="id_ticket" ColumnName="id_ticket" />
+                <ScalarProperty Name="reys_id" ColumnName="reys_id" />
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="status_ticket_id" ColumnName="status_ticket_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trains">
+            <EntityTypeMapping TypeName="CashDeskModel.Train">
+              <MappingFragment StoreEntitySet="Train">
+                <ScalarProperty Name="id_train" ColumnName="id_train" />
+                <ScalarProperty Name="type_train_id" ColumnName="type_train_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type_train">
+            <EntityTypeMapping TypeName="CashDeskModel.Type_train">
+              <MappingFragment StoreEntitySet="Type_train">
+                <ScalarProperty Name="id_type_train" ColumnName="id_type_train" />
+                <ScalarProperty Name="name_type" ColumnName="name_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type_wagon">
+            <EntityTypeMapping TypeName="CashDeskModel.Type_wagon">
+              <MappingFragment StoreEntitySet="Type_wagon">
+                <ScalarProperty Name="id_type_wagon" ColumnName="id_type_wagon" />
+                <ScalarProperty Name="name_type" ColumnName="name_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Wagons">
+            <EntityTypeMapping TypeName="CashDeskModel.Wagon">
+              <MappingFragment StoreEntitySet="Wagon">
+                <ScalarProperty Name="id_wagon" ColumnName="id_wagon" />
+                <ScalarProperty Name="train_id" ColumnName="train_id" />
+                <ScalarProperty Name="type_wagon_id" ColumnName="type_wagon_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,9 @@
+﻿@model CashTicket.Models.Ticket
+
+@{
+    ViewBag.Title = "Билет забронирован";
+}
+
+<h2>Билет @Html.DisplayFor(model => model.id_ticket) забронирован!</h2>
+
+@Html.ActionLink("Вернуться к расписанию рейсов", "Index", "Reys", null, null)
