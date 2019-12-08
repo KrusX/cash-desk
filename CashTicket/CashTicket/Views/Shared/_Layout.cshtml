@@ -22,7 +22,10 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Расписание рейсов", "Index", "Reys")</li>
-                    <li>@Html.ActionLink("Список бронирований", "Index", "Reservations")</li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Список бронирований", "Index", "Reservations")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

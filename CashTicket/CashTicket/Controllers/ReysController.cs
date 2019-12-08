@@ -18,7 +18,6 @@ namespace CashTicket.Controllers
         public ActionResult Index(string search1, string search2)
         {
             List<Rey> listreys = db.Reys.ToList();
-            var reys = db.Reys.Include(r => r.Train);
             return View(db.Reys.Where(x => x.start_point.StartsWith(search1) || search1 == null || x.end_point.StartsWith(search2) || search2 == null).ToList());
         }
 

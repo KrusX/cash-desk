@@ -6,10 +6,20 @@
 
 <div align="center">
     <h2>Расписание рейсов</h2>
-    @Html.ActionLink("Создать рейс", "Create") | 
-    @Html.ActionLink("Поезда", "Index", "Trains", null, null) | 
-    @Html.ActionLink("Вагоны", "Index", "Wagons", null, null) | 
-    @Html.ActionLink("Клиенты", "Index", "CLients", null, null)
+    @if (User.IsInRole("Администратор"))
+    {
+        @Html.ActionLink("Создать рейс ", "Create")
+        @Html.ActionLink("Поезда ", "Index", "Trains", null, null)
+        @Html.ActionLink("Вагоны ", "Index", "Wagons", null, null)
+        @Html.ActionLink("Клиенты ", "Index", "Clients", null, null)
+    }
+    else if (User.IsInRole("Менеджер"))
+    {
+        @Html.ActionLink("Создать рейс ", "Create")
+        @Html.ActionLink("Поезда ", "Index", "Trains", null, null)
+        @Html.ActionLink("Вагоны ", "Index", "Wagons", null, null)
+        @Html.ActionLink("Клиенты ", "Index", "Clients", null, null)
+    }
 </div>
 
     @using (Html.BeginForm("Index", "Reys", FormMethod.Get))
@@ -84,12 +94,31 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.end_date)
                 </td>
-                <td>
-                    @Html.ActionLink("Редактировать рейс", "Edit", new { id = item.id_reys }) |
-                    @Html.ActionLink("Удалить рейс", "Delete", new { id = item.id_reys }) |
-                    @Html.ActionLink("Забронировать билет", "Index", "Tickets", new { id = item.id_reys }, null)
-                </td>
-            </tr>
+                @if (User.IsInRole("Администратор"))
+                {
+                    <td>
+                        @Html.ActionLink("Редактировать рейс ", "Edit", new { id = item.id_reys })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Удалить рейс ", "Delete", new { id = item.id_reys })
+                    </td>
+                }
+                else if (User.IsInRole("Менеджер"))
+                {
+                    <td>
+                        @Html.ActionLink("Редактировать рейс ", "Edit", new { id = item.id_reys })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Удалить рейс ", "Delete", new { id = item.id_reys })
+                    </td>
+                }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <td>
+                            @Html.ActionLink("Забронировать билет", "Index", "Tickets", new { id = item.id_reys }, null)
+                        </td>
+                     }
+                    </tr>
             }
         }
         </tbody>

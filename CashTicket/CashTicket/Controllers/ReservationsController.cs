@@ -20,7 +20,16 @@ namespace CashTicket.Controllers
         public ActionResult Index()
         {
             var reservations = db.Reservations.Include(r => r.Client).Include(r => r.Status_res).Include(r => r.Ticket);
-            return View(reservations.ToList());
+            if (User.IsInRole("Клиент"))
+            {
+                string currentUserName = User.Identity.Name;
+                Client client = db.Clients.FirstOrDefault(x => x.login == currentUserName);
+                return View(db.Reservations.Where(x => x.client_id == client.id_client).ToList());
+            }
+            else
+            {
+                return View(reservations.ToList());
+            }
         }
 
         [Authorize(Roles = "Администратор, Менеджер, Клиент")]
@@ -95,7 +104,7 @@ namespace CashTicket.Controllers
             return View(reservation);
         }
 
-        [Authorize(Roles = "Администратор, Менеджер")]
+        [Authorize(Roles = "Администратор, Менеджер, Клиент")]
         // GET: Reservations/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -111,7 +120,7 @@ namespace CashTicket.Controllers
             return View(reservation);
         }
 
-        [Authorize(Roles = "Администратор, Менеджер")]
+        [Authorize(Roles = "Администратор, Менеджер, Клиент")]
         // POST: Reservations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

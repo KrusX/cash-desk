@@ -37,28 +37,42 @@
     {
         foreach (var item in Model)
         {
-            <tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ticket.id_ticket)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date_reservation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status_res.name_status)
+            </td>
+
+            @if (User.IsInRole("Администратор"))
+            {
                 <td>
-                    @Html.DisplayFor(modelItem => item.Ticket.id_ticket)
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.id_reservation })
                 </td>
+            }
+            else if (User.IsInRole("Менеджер"))
+            {
                 <td>
-                    @Html.DisplayFor(modelItem => item.date_reservation)
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.id_reservation })
                 </td>
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
                 <td>
-                    @Html.DisplayFor(modelItem => item.Client.surname)
+                    @Html.ActionLink("Отменить", "Delete", new { id = item.id_reservation })
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Client.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status_res.name_status)
-                </td>
-                <td>
-                    @Html.ActionLink("Редактировать", "Edit", new { id = item.id_reservation }) |
-                    @Html.ActionLink("Оплатить", "Pay", new { id = item.id_reservation }) |
-                    @Html.ActionLink("Удалить", "Delete", new { id = item.id_reservation })
-                </td>
-            </tr>
+            }
+        </tr>
         }
     }
 </table>
