@@ -68,9 +68,18 @@
             }
             @if (User.Identity.IsAuthenticated)
             {
-                <td>
-                    @Html.ActionLink("Отменить", "Delete", new { id = item.id_reservation })
-                </td>
+                if (item.status_reservation_id != 1)
+                {
+                    <td>
+                        @Html.ActionLink("Оплатить", "Pay", new { id = item.id_reservation })
+                    </td>
+                }
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                    <td>
+                        @Html.ActionLink("Отменить", "Delete", new { id = item.id_reservation })
+                    </td>
             }
         </tr>
         }
