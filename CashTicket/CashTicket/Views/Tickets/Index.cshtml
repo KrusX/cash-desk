@@ -7,7 +7,14 @@
 <h2>Билеты</h2>
 
 <p>
-    @Html.ActionLink("Создать билет", "Create")
+    @if (User.IsInRole("Администратор"))
+    {
+        @Html.ActionLink("Создать билет", "Create")
+    }
+    else if (User.IsInRole("Менеджер"))
+    {
+        @Html.ActionLink("Создать билет", "Create")
+    }
 </p>
 <table class="table">
     <tr>
@@ -60,9 +67,25 @@
                 @Html.DisplayFor(modelItem => item.price)
             </td>
             <td>
-                @Html.ActionLink("Редактировать", "Edit", new { id = item.id_ticket }) |
-                @Html.ActionLink("Забронировать билет", "AddToReserve", new { id = item.id_ticket }) |
-                @Html.ActionLink("Удалить", "Delete", new { id = item.id_ticket })
+                @if (User.IsInRole("Администратор"))
+                {
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.id_ticket })
+                }
+                else if (User.IsInRole("Менеджер"))
+                {
+                    @Html.ActionLink("Редактировать", "Edit", new { id = item.id_ticket })
+                }
+
+                @Html.ActionLink("Забронировать билет", "AddToReserve", new { id = item.id_ticket })
+
+                @if (User.IsInRole("Администратор"))
+                {
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.id_ticket })
+                }
+                else if (User.IsInRole("Менеджер"))
+                {
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.id_ticket })
+                }
             </td>
         </tr>
 
